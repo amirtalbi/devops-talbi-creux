@@ -1,43 +1,19 @@
-// @ts-check
-const eslint = require("@eslint/js");
-const tseslint = require("typescript-eslint");
-const angular = require("angular-eslint");
+import js from '@eslint/js'
+import pluginVue from 'eslint-plugin-vue'
+import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
-module.exports = tseslint.config(
+export default [
   {
-    files: ["**/*.ts"],
-    extends: [
-      eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylistic,
-      ...angular.configs.tsRecommended,
-    ],
-    processor: angular.processInlineTemplates,
-    rules: {
-      "@angular-eslint/directive-selector": [
-        "error",
-        {
-          type: "attribute",
-          prefix: "app",
-          style: "camelCase",
-        },
-      ],
-      "@angular-eslint/component-selector": [
-        "error",
-        {
-          type: "element",
-          prefix: "app",
-          style: "kebab-case",
-        },
-      ],
-    },
+    name: 'app/files-to-lint',
+    files: ['**/*.{js,mjs,jsx,vue}'],
   },
+
   {
-    files: ["**/*.html"],
-    extends: [
-      ...angular.configs.templateRecommended,
-      ...angular.configs.templateAccessibility,
-    ],
-    rules: {},
-  }
-);
+    name: 'app/files-to-ignore',
+    ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
+  },
+
+  js.configs.recommended,
+  ...pluginVue.configs['flat/essential'],
+  skipFormatting,
+]
