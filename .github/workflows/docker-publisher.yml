@@ -1,4 +1,4 @@
-name: Build and Push Docker Images
+name: Build, Push, and Update Deployment
 
 on:
   push:
@@ -32,7 +32,7 @@ jobs:
           npm ci
           npm run lint
 
-  build-and-push-docker:
+  build-push-update:
     runs-on: ubuntu-latest
     needs: lint-and-build
     steps:
@@ -44,14 +44,14 @@ jobs:
         working-directory: ./backend
         run: |
           version=$(node -p "require('./package.json').version")
-          echo "version=$version" >> $GITHUB_ENV
+          echo "backend_version=$version" >> $GITHUB_ENV
 
       - name: Extract Frontend Version from package.json
         id: frontend-version
         working-directory: ./frontend
         run: |
           version=$(node -p "require('./package.json').version")
-          echo "version=$version" >> $GITHUB_ENV
+          echo "frontend_version=$version" >> $GITHUB_ENV
 
       - name: Log In to GitHub Container Registry
         uses: docker/login-action@v2
@@ -63,11 +63,26 @@ jobs:
       - name: Build and Push Backend Image
         working-directory: ./backend
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:${{ env.version }} .
-          docker push ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:${{ env.version }}
+          docker build -t ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:${{ env.backend_version }} .
+          docker push ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:${{ env.backend_version }}
 
       - name: Build and Push Frontend Image
         working-directory: ./frontend
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:${{ env.version }} .
-          docker push ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:${{ env.version }}
+          docker build -t ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:${{ env.frontend_version }} .
+          docker push ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:${{ env.frontend_version }}
+
+      - name: Update Docker Compose on Remote Server
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+          BACKEND_VERSION: ${{ env.backend_version }}
+          FRONTEND_VERSION: ${{ env.frontend_version }}
+        run: |
+          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST << EOF
+          sed -i "s|ghcr.io/.*/devops-backend:.*|ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:$BACKEND_VERSION|" /opt/docker/devops/docker-compose.yml
+          sed -i "s|ghcr.io/.*/devops-frontend:.*|ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:$FRONTEND_VERSION|" /opt/docker/devops/docker-compose.yml
+          docker-compose -f /opt/docker/devops/docker-compose.yml pull
+          docker-compose -f /opt/docker/devops/docker-compose.yml up -d
+          EOF
