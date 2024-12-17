@@ -1,0 +1,45 @@
+<nz-layout>
+  @if(showNavbar){
+  <nz-header>
+    <div nz-row nzAlign="middle" nzJustify="space-between">
+      <div nz-col>
+        <ul nz-menu nzTheme="light" nzMode="horizontal">
+          <img src="../assets/img/logo/logo.png" alt="" class="logo" />
+          <li nz-submenu nzTitle="Projets" routerLink="/home">
+            <ul>
+              <li nz-menu-group nzTitle="Sélectionner">
+                <ul>
+                  @for (project of taskService.projects$ | async; track $index)
+                  {
+                  <li nz-menu-item (click)="updateSelectedProject(project)">
+                    {{ project.name }}
+                  </li>
+                  }
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li nz-menu-item routerLink="/tabs">Tabs</li>
+        </ul>
+      </div>
+      <div nz-col nzAlign="middle">
+        <button
+          nz-button
+          class="btn-primary create-btn"
+          (click)="createComponentModal()"
+        >
+          Créer
+        </button>
+        <nz-avatar
+          nzSize="large"
+          src="../assets/img/avatar.jpg"
+          class="avatar"
+        ></nz-avatar>
+      </div>
+    </div>
+  </nz-header>
+  }
+  <nz-content>
+    <router-outlet></router-outlet>
+  </nz-content>
+</nz-layout>

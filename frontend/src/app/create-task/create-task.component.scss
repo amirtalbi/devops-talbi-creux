@@ -1,0 +1,68 @@
+.task-container{
+    height: 70vh;
+    overflow-y: scroll;
+}
+.position-left{
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+}
+.bg-gray{
+    background-color: #a3a3a345;
+    padding: 5px;
+    font-size: large;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.col{
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+
+}
+textarea{
+    border-radius: 2px;
+    padding: 5px;
+    margin-top: 5px;
+    width: 100%;
+    height: 45vh;
+    border: 0px;
+    background-color: #a3a3a345;
+    resize: none;
+}
+.col-4{
+    height: 65vh;
+    padding: 10px !important;
+}
+.state-button{
+    margin-bottom: 10px !important;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+}
+p{
+    margin-top: 10px;
+    font-size: large;
+}
+
+.parent-task{
+    font-weight: bolder;
+}
+.header-task{
+    margin-top: 2%;
+    display: flex;
+    flex-direction: row;
+    .task-submit-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        width: 100%;
+        .task-submit-btn{
+            width: 100px;
+            height: 40px;
+        }
+
+    }
+}

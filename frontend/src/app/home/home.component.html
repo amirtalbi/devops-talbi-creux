@@ -1,0 +1,113 @@
+<div class="home-container">
+  <div class="left-side-container">
+    <div class="content">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Sélectionner un projet"
+        nzSize="large"
+        [(ngModel)]="currentSelectedProject"
+        (ngModelChange)="onProjectChange($event)"
+      >
+        @for (project of taskService.projects$ | async; track $index) {
+        <nz-option [nzLabel]="project.name" [nzValue]="project.id"></nz-option>
+        }
+      </nz-select>
+    </div>
+    <div class="content">
+      <span class="title"> Toutes les tâches </span>
+    </div>
+    <div class="content">
+      @if (taskService.selectedProject$ | async) { @for (task of
+      taskService.selectedProject.tasks; track task.id) {
+      <div class="card">
+        <span
+          nz-icon
+          [nzType]="getIconByTaskType(task.type)"
+          nzTheme="outline"
+        ></span>
+        <span>{{ task.title }}</span>
+        <span
+          nz-icon
+          [nzType]="getIconByPriority(task.priority)"
+          nzTheme="outline"
+        ></span>
+      </div>
+      } } @else {
+      <div class="content">Veuillez sélectionner un projet...</div>
+      }
+    </div>
+  </div>
+  <div class="right-side-container">
+    <div class="content">
+      <span class="title"> Mes tâches </span>
+    </div>
+    <div class="content">
+      <div class="horizontal-container">
+        <div class="search-bar">
+          <input
+            nz-input
+            type="text"
+            placeholder="Rechercher par nom..."
+            [disabled]="!(disabled$ | async)"
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+        <div class="filter">
+          <label>Filtrer par:</label>
+          <nz-select
+            [disabled]="!(disabled$ | async)"
+            [(ngModel)]="currentSelectedFilter"
+            nzAllowClear
+            nzPlaceHolder="Choisir un filtre"
+            (ngModelChange)="onFilterChange($event)"
+          >
+            <nz-option-group nzLabel="Priorité">
+              <nz-option [nzValue]="Priority.Low" nzLabel="Faible"></nz-option>
+              <nz-option
+                [nzValue]="Priority.Medium"
+                nzLabel="Moyenne"
+              ></nz-option>
+              <nz-option [nzValue]="Priority.High" nzLabel="Haute"></nz-option>
+            </nz-option-group>
+            <nz-option-group nzLabel="Type">
+              <nz-option
+                [nzValue]="TaskType.Update"
+                nzLabel="Amélioration"
+              ></nz-option>
+              <nz-option
+                [nzValue]="TaskType.NewFeature"
+                nzLabel="Fonctionnalité"
+              ></nz-option>
+              <nz-option
+                [nzValue]="TaskType.BugFix"
+                nzLabel="Bug Fixe"
+              ></nz-option>
+            </nz-option-group>
+          </nz-select>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      @if (taskService.selectedProject$ | async) {
+      @if(taskService.userSelectedTask.length === 0) {
+      <div class="content">Aucune tâche trouvée...</div>
+      } @else { @for (task of taskService.userSelectedTask |
+      filterTasks:searchTerm; track task.id) {
+      <div class="card">
+        <span
+          nz-icon
+          [nzType]="getIconByTaskType(task.type)"
+          nzTheme="outline"
+        ></span>
+        <span>{{ task.title }}</span>
+        <span
+          nz-icon
+          [nzType]="getIconByPriority(task.priority)"
+          nzTheme="outline"
+        ></span>
+      </div>
+      } } }
+    </div>
+  </div>
+</div>

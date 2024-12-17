@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="row col-10">
+     <div class="col-6 auth-background"></div>
+    <div class="col-6">
+      <h1 translate class="text-center">{{isRegister ? "S'inscrire" : "Se connecter"}}</h1>
+      <form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        @if (isRegister) {
+          <div class="avatar-field">
+              <div [style.background]="avatar" class="avatar">
+              </div>
+              <input type="file" class="input" name="avatar" />
+          </div>
+        }
+        <input formControlName="username"  placeholder="Username" class="input"/>
+        <input formControlName="password" type="password" placeholder="Password"  class="input"/>
+        <button [disabled]="!validateForm.valid" class="btn btn-primary">{{isRegister ? "S'inscrire" : "Se connecter"}}</button>
+      </form>
+    </div>
+  </div>
+</div>

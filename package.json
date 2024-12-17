@@ -1,0 +1,11 @@
+{
+  "name": "projet_web",
+  "version": "1.0.0",
+  "scripts": {
+    "docker:up": "docker compose up -d"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

@@ -1,0 +1,85 @@
+app-home {
+  .home-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .left-side-container {
+    border: 1px solid #dcdcdc;
+    width: 49%;
+    height: 100%;
+    border-radius: 4px;
+    padding: 15px 25px;
+    overflow-y: auto;
+
+    nz-select {
+      width: 100%;
+    }
+  }
+
+  .content {
+    margin-bottom: 25px;
+
+    .card {
+      width: 100%;
+      height: 60px;
+      border: 1px solid #b7c5ca;
+      display: flex;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      background-color: #b7c5ca;
+      padding: 12px 12px;
+      align-items: center;
+      justify-content: space-between;
+
+      [nz-icon] {
+        font-size: 24px;
+      }
+    }
+  }
+
+  .right-side-container {
+    border: 1px solid #dcdcdc;
+    width: 49%;
+    height: 100%;
+    border-radius: 4px;
+    padding: 15px 25px;
+    overflow-y: auto;
+
+    .horizontal-container {
+      display: flex;
+      align-items: center;
+      height: 50px;
+    }
+
+    .search-bar,
+    .filter {
+      flex: 1;
+      margin: 0 10px;
+
+      nz-select {
+        margin-left: 10px;
+        width: 50%;
+      }
+    }
+
+    .filter {
+      display: flex;
+      align-items: baseline;
+      justify-content: end;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 5px;
+    }
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+}

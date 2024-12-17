@@ -1,0 +1,42 @@
+.row{
+    background-color: white;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.3); 
+    box-shadow: 3px 4px 15px 4px rgba(0,0,0,0.3);
+    height: 40vh;
+
+    .auth-background{
+        background-image: 
+            linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), 
+            url('../../assets/img/background/auth.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 100%;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        margin: 2%;
+    }
+    .rounded{
+        border-radius: 100%;
+    }
+    .avatar-field{
+        display: flex;
+        flex-direction: row;
+        .avatar{
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            margin: 2%;
+            background-color: gray;
+        }
+    }
+}
+

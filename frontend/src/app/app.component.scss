@@ -1,0 +1,36 @@
+.logo {
+  width: 120px;
+  margin-inline: 10px;
+}
+
+nz-layout {
+  height: 100%;
+}
+
+[nz-menu] {
+  line-height: 64px;
+}
+
+nz-content {
+  padding: 10px 30px;
+  background: #fff;
+}
+
+nz-header {
+  padding: 0 !important;
+  background: #fff;
+}
+
+.inner-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
+.create-btn {
+  margin-inline: 15px;
+}
+
+.avatar {
+  margin-right: 15px;
+}

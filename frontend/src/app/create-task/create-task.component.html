@@ -1,0 +1,64 @@
+<div class="task-container">
+  <div class="header-task">
+    <h1 class="col-8">Tache</h1>
+    <div class="task-submit-container">
+      <button class="btn btn-primary task-submit-btn col-4" (click)="submit()">Valider</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8">
+      <div class="bg-gray">
+        <div class="row position-left">
+          <label for="title">Titre</label>
+          <input type="text" id="title" [(ngModel)]="task.title" class="input" required />
+        </div>
+        <div class="row position-left">
+          <label for="type">Type</label>
+          <input type="text" id="type" [(ngModel)]="task.type" class="input" required />
+        </div>
+      </div>
+        <div class="row position-left">
+          <label for="description">Description</label>
+          <textarea id="description" [(ngModel)]="task.description" class="textarea"></textarea>
+        </div>
+    </div>
+    <div class="col-4">
+      <div>
+        <div class="state-button">
+            <label>Statut</label>
+            <select [(ngModel)]="task.priority" class="input">
+                <option value="Open">ouvert</option>
+                <option value="ongoing">Encours</option>
+                <option value="done">Terminié</option>
+            </select>
+        </div>
+        <div class="row position-left">
+          <label for="assignedTo">Assigné à:</label>
+                <input type="text" id="assignedTo" [(ngModel)]="task.assignedTo" class="input" [disabled]="task.assignedTo"/>
+
+          @if (task.assignedTo){
+            <span (click)="clearAssignation()" class="text-primary"> annuler</span>
+        }@else{
+            <span (click)="assignToMe()" class="text-primary"> Me l'affecter</span>
+          }
+        </div>
+        <div>
+          <label>Priorité</label>
+          <select [(ngModel)]="task.priority" class="input">
+            <option value="Low">Basse</option>
+            <option value="Medium">Moyenne</option>
+            <option value="High">Haute</option>
+          </select>
+        </div>
+        <div>
+          <label for="tags">Tags</label>
+          <input type="text" id="tags" [(ngModel)]="task.tagsString" (blur)="updateTags()" placeholder="Séparez par des virgules" class="input col-5" />
+        </div>
+        <div>
+          <label for="dueDate">Date d'échéance</label>
+          <input type="datetime-local" id="dueDate" [(ngModel)]="task.dueDate" class="input col-5" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
