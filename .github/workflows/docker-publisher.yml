@@ -80,10 +80,9 @@ jobs:
           BACKEND_VERSION: ${{ env.backend_version }}
           FRONTEND_VERSION: ${{ env.frontend_version }}
         run: |
-          echo $GITHUB_ENV
           sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_HOST << EOF
-          sed -i "s|ghcr.io/.*/devops-backend:*|ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:$BACKEND_VERSION|" /opt/docker/devops/docker-compose.yml
-          sed -i "s|ghcr.io/.*/devops-frontend:*|ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:$FRONTEND_VERSION|" /opt/docker/devops/docker-compose.yml
+          sed -i "s|ghcr.io/.*/devops-backend:.*|ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:$BACKEND_VERSION|" /opt/docker/devops/docker-compose.yml
+          sed -i "s|ghcr.io/.*/devops-frontend:.*|ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:$FRONTEND_VERSION|" /opt/docker/devops/docker-compose.yml
           docker-compose -f /opt/docker/devops/docker-compose.yml pull
           docker-compose -f /opt/docker/devops/docker-compose.yml up -d
           EOF
