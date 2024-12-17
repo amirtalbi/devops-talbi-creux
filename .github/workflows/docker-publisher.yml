@@ -23,14 +23,13 @@ jobs:
       - name: Install Dependencies and Lint Backend
         working-directory: ./backend
         run: |
-          npm i
+          npm ci
           npm run lint
-          pwd
 
       - name: Install Dependencies and Lint Frontend
         working-directory: ./frontend
         run: |
-          npm i
+          npm ci
           npm run lint
 
   build-and-push-docker:
@@ -40,15 +39,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Extract Backend Version
+      - name: Extract Backend Version from package.json
         id: backend-version
         working-directory: ./backend
-        run: echo "version=$(jq -r '.version' version.json)" >> $GITHUB_ENV
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> $GITHUB_ENV
 
-      - name: Extract Frontend Version
+      - name: Extract Frontend Version from package.json
         id: frontend-version
         working-directory: ./frontend
-        run: echo "version=$(jq -r '.version' version.json)" >> $GITHUB_ENV
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> $GITHUB_ENV
 
       - name: Log In to Docker Hub
         uses: docker/login-action@v2
