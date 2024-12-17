@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TaskService } from './task.service';
+import { TaskType } from '../models/task.model';
 
 @Component({
   selector: 'app-create-task',
@@ -12,12 +13,13 @@ export class CreateTaskComponent {
     description: '',
     projectId: '',
     assignedTo: '',
-    type:'',
+    type: 'Bug' as TaskType,
     tags: [] as string[],
     tagsString: '',
     priority: 'Low',
     status: 'Open',
-    dueDate: ''
+    dueDate: '',
+    id: 0
   };
 
   constructor(private taskService: TaskService) {}
@@ -45,15 +47,15 @@ export class CreateTaskComponent {
       return;
     }
 
-    this.taskService.createTask(this.task).subscribe({
-      next: (response) => {
-        alert('Tâche créée avec succès !');
-        console.log(response);
-      },
-      error: (error) => {
-        alert('Erreur lors de la création de la tâche.');
-        console.error(error);
-      }
-    });
+    // this.taskService.createTask(this.task).subscribe({
+    //   next: (response) => {
+    //     alert('Tâche créée avec succès !');
+    //     console.log(response);
+    //   },
+    //   error: (error) => {
+    //     alert('Erreur lors de la création de la tâche.');
+    //     console.error(error);
+    //   }
+    // });
   }
 }
