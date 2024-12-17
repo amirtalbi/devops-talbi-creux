@@ -3,8 +3,6 @@ FROM node:20 AS build
 
 WORKDIR /usr/src/app
 
-ENV npm_config_optional=false
-
 COPY package*.json ./
 
 RUN npm ci
@@ -14,12 +12,14 @@ COPY . .
 RUN npm run build
 
 # Production Stage
-FROM node:20
+FROM nginx:stable-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /usr/share/nginx/html
 
-COPY --from=build /usr/src/app/dist ./dist
+# Copier les fichiers statiques générés par Vite dans le dossier nginx
+COPY --from=build /usr/src/app/dist .
 
-EXPOSE 4200
+# Remplacer la configuration par défaut de Nginx si nécessaire
+EXPOSE 80
 
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]
