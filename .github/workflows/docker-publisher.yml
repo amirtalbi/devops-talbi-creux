@@ -23,13 +23,14 @@ jobs:
       - name: Install Dependencies and Lint Backend
         working-directory: ./backend
         run: |
-          npm ci
+          npm i
           npm run lint
+          pwd
 
       - name: Install Dependencies and Lint Frontend
         working-directory: ./frontend
         run: |
-          npm ci
+          npm i
           npm run lint
 
   build-and-push-docker:
