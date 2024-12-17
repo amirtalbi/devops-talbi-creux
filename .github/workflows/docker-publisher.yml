@@ -63,11 +63,11 @@ jobs:
       - name: Build and Push Backend Image
         working-directory: ./backend
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_LOGIN }}/backend:${{ env.version }} .
-          docker push ghcr.io/${{ secrets.GHCR_LOGIN }}/backend:${{ env.version }}
+          docker build -t ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:${{ env.version }} .
+          docker push ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-backend:${{ env.version }}
 
       - name: Build and Push Frontend Image
         working-directory: ./frontend
         run: |
-          docker build -t ghcr.io/${{ secrets.GHCR_LOGIN }}/frontend:${{ env.version }} .
-          docker push ghcr.io/${{ secrets.GHCR_LOGIN }}/frontend:${{ env.version }}
+          docker build -t ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:${{ env.version }} .
+          docker push ghcr.io/${{ secrets.GHCR_LOGIN }}/devops-frontend:${{ env.version }}
