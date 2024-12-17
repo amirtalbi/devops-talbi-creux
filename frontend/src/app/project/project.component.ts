@@ -1,42 +1,38 @@
 import { Component } from '@angular/core';
 import { ProjectService } from './project.service';
 
-interface projet{
-  id: number,
-  name: string,
+interface projet {
+  id: number;
+  name: string;
 }
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
-  styleUrls: ['./project.component.scss']
+  styleUrls: ['./project.component.scss'],
 })
 export class ProjectComponent {
-  search: string = '';
+  search = '';
   projects: projet[] = [];
-  filteredProjects:projet[] = [];
+  filteredProjects: projet[] = [];
 
-  constructor(private projectService:ProjectService) {
+  constructor(private projectService: ProjectService) {
     this.filteredProjects = this.projects;
   }
 
   createProject() {
-    const projectName = prompt('Entrez le nom du nouveau projet :');
-    
+    prompt('Entrez le nom du nouveau projet :');
   }
 
-  renameProject(project: projet) {
-  }
-
-  deleteProject(project: projet) {
+  deleteProject() {
     this.filterProjects();
   }
 
   filterProjects() {
-    this.filteredProjects = this.projects.filter(project =>
+    this.filteredProjects = this.projects.filter((project) =>
       project.name.toLowerCase().includes(this.search.toLowerCase())
     );
   }
-  isProjectSelected(project:projet) {
+  isProjectSelected(project: projet) {
     return this.projectService.getSelectedProject().name === project.name;
   }
 }

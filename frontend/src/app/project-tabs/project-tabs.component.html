@@ -11,17 +11,19 @@
     <div class="horizontal-container">
       <div class="search-bar">
         <input
+          id="search"
           nz-input
           type="text"
           placeholder="Rechercher par nom..."
-          [disabled]="!(disabled$ | async)"
+          [disabled]="(disabled$ | async) === false"
           [(ngModel)]="searchTerm"
         />
       </div>
       <div class="filter">
-        <label>Filtrer par:</label>
+        <label for="filter">Filtrer par:</label>
         <nz-select
-          [disabled]="!(disabled$ | async)"
+          id="filter"
+          [disabled]="(disabled$ | async) === false"
           [(ngModel)]="currentSelectedFilter"
           nzAllowClear
           nzPlaceHolder="Choisir un filtre"
@@ -33,7 +35,7 @@
               [nzValue]="Priority.Medium"
               nzLabel="Moyenne"
             ></nz-option>
-            <nz-option [nzValue]="Priority.High" nzLabel="Haute"></nz-option>
+            <nz-option [nzValue]="Priority.High" nzLabel="Élevée"></nz-option>
           </nz-option-group>
           <nz-option-group nzLabel="Type">
             <nz-option
@@ -119,3 +121,6 @@
     </div>
   </div>
 </div>
+
+<label for="exampleInput">Exemple Label:</label>
+<input id="exampleInput" type="text" />

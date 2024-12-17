@@ -11,7 +11,7 @@
                 <ul>
                   @for (project of taskService.projects$ | async; track $index)
                   {
-                  <li nz-menu-item (click)="updateSelectedProject(project)">
+                  <li nz-menu-item (click.keyup)="updateSelectedProject(project)">
                     {{ project.name }}
                   </li>
                   }

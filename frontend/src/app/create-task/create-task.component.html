@@ -25,8 +25,8 @@
     <div class="col-4">
       <div>
         <div class="state-button">
-            <label>Statut</label>
-            <select [(ngModel)]="task.priority" class="input">
+            <label for="select">Statut</label>
+            <select id="select" [(ngModel)]="task.priority" class="input">
                 <option value="Open">ouvert</option>
                 <option value="ongoing">Encours</option>
                 <option value="done">Terminié</option>
@@ -37,14 +37,14 @@
                 <input type="text" id="assignedTo" [(ngModel)]="task.assignedTo" class="input" [disabled]="task.assignedTo"/>
 
           @if (task.assignedTo){
-            <span (click)="clearAssignation()" class="text-primary"> annuler</span>
+            <span (click.keyup)="clearAssignation()" class="text-primary"> annuler</span>
         }@else{
-            <span (click)="assignToMe()" class="text-primary"> Me l'affecter</span>
+            <span (click.keyup)="assignToMe()" class="text-primary"> Me l'affecter</span>
           }
         </div>
         <div>
-          <label>Priorité</label>
-          <select [(ngModel)]="task.priority" class="input">
+          <label for="property">Priorité</label>
+          <select id="property" [(ngModel)]="task.priority" class="input">
             <option value="Low">Basse</option>
             <option value="Medium">Moyenne</option>
             <option value="High">Haute</option>

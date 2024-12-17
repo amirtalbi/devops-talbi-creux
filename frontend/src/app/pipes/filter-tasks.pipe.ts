@@ -5,7 +5,7 @@ import { Task } from '../models/task.model';
   name: 'filterTasks',
 })
 export class FilterTasksPipe implements PipeTransform {
-  transform(tasks: Task[], searchTerm: string): any[] {
+  transform(tasks: Task[], searchTerm: string): Task[] {
     if (!tasks || !searchTerm) {
       return tasks;
     }

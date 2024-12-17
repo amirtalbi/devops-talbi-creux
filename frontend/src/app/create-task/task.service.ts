@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Task } from '../models/task.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 
-  createTask(task: any): Observable<any> {
+  createTask(task: Task): Observable<object> {
     return this.http.post(this.apiUrl, task);
   }
 }

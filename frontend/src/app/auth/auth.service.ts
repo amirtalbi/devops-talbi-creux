@@ -1,14 +1,19 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+
+interface AuthResponse {
+  token: string;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly apiUrl = 'http://localhost:3000/auth';
-  private readonly tokenKey = 'accessToken';
+  private readonly apiUrl = 'https://api.example.com';
+  private readonly tokenKey = 'authToken';
   public isAuth = false;
 
   constructor(private readonly http: HttpClient, private router: Router) {
@@ -35,22 +40,22 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string): Observable<any> {
+  login(email: string, password: string): Observable<AuthResponse> {
     return this.http
-      .post<any>(`${this.apiUrl}/login`, { email, password })
+      .post<AuthResponse>(`${this.apiUrl}/login`, { email, password })
       .pipe(
-        tap((response) => {
+        tap((response: AuthResponse) => {
           this.setLocalStorageItem(this.tokenKey, response.token);
           this.isAuth = true;
         })
       );
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
+  register(username: string, email: string, password: string): Observable<AuthResponse> {
     return this.http
-      .post<any>(`${this.apiUrl}/register`, { username, email, password })
+      .post<AuthResponse>(`${this.apiUrl}/register`, { username, email, password })
       .pipe(
-        tap((response) => {
+        tap((response: AuthResponse) => {
           this.setLocalStorageItem(this.tokenKey, response.token);
           this.isAuth = true;
         })

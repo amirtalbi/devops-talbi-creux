@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public Priority = Priority;
   public TaskType = TaskType;
 
-  public searchTerm: string = '';
+  public searchTerm = '';
 
   private userId = 1; // replace it with userService
 
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  public onProjectChange(id: any): void {
+  public onProjectChange(id: number): void {
     if (!id) {
       this.reset();
       return;

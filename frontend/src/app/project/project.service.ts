@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class ProjectService {
   private selectedProject: { id: string, name: string };
-  constructor() { }
   
   setSelectedProject(id:string,name:string) {
     this.selectedProject = { id, name };

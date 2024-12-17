@@ -17,7 +17,7 @@ export class ProjectTabsComponent implements OnInit, OnDestroy {
   public Priority = Priority;
   public TaskType = TaskType;
 
-  public searchTerm: string = '';
+  public searchTerm = '';
 
   public disabled$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false

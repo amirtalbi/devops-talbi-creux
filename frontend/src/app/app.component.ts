@@ -21,7 +21,7 @@ export class AppComponent {
     private viewContainerRef: ViewContainerRef,
     public taskService: TaskService
   ) {
-    router.events.subscribe((val) => {
+    router.events.subscribe(() => {
       if (router.url.includes('login') || router.url.includes('register')) {
         this.showNavbar = false;
       } else {
@@ -48,7 +48,7 @@ export class AppComponent {
   }
 
   createComponentModal(): void {
-    const modal = this.modal.create<CreateTaskComponent>({
+    this.modal.create<CreateTaskComponent>({
       nzContent: CreateTaskComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzWidth: '80%',
