@@ -7,7 +7,9 @@ import { UpdateSubtaskDto } from './dto/update-subtask.dto';
 
 @Injectable()
 export class SubtaskService {
-  constructor(@InjectModel(Subtask.name) private subtaskModel: Model<SubtaskDocument>) {}
+  constructor(
+    @InjectModel(Subtask.name) private subtaskModel: Model<SubtaskDocument>,
+  ) {}
 
   async create(createSubtaskDto: CreateSubtaskDto): Promise<Subtask> {
     const createdSubtask = new this.subtaskModel(createSubtaskDto);
@@ -30,8 +32,13 @@ export class SubtaskService {
     return subtask;
   }
 
-  async update(id: string, updateSubtaskDto: UpdateSubtaskDto): Promise<Subtask> {
-    const updatedSubtask = await this.subtaskModel.findByIdAndUpdate(id, updateSubtaskDto, { new: true }).exec();
+  async update(
+    id: string,
+    updateSubtaskDto: UpdateSubtaskDto,
+  ): Promise<Subtask> {
+    const updatedSubtask = await this.subtaskModel
+      .findByIdAndUpdate(id, updateSubtaskDto, { new: true })
+      .exec();
     if (!updatedSubtask) {
       throw new NotFoundException(`Subtask with ID ${id} not found`);
     }

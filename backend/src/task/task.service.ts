@@ -75,13 +75,13 @@ export class TaskService {
   private buildTaskTree(tasks: Task[]): Task[] {
     const taskMap = new Map<string, Task>();
 
-    tasks.forEach(task => {
+    tasks.forEach((task) => {
       taskMap.set(task._id.toString(), task);
     });
 
     const taskTree: Task[] = [];
 
-    tasks.forEach(task => {
+    tasks.forEach((task) => {
       if (task.parent) {
         const parentTask = taskMap.get(task.parent.toString());
         if (parentTask) {

@@ -14,27 +14,48 @@ export class Task {
   @Prop()
   description: string;
 
-  @ApiProperty({ description: 'Project ID associated with the task', type: String })
+  @ApiProperty({
+    description: 'Project ID associated with the task',
+    type: String,
+  })
   @Prop({ type: Types.ObjectId, ref: 'Project', required: true })
   projectId: Types.ObjectId;
 
-  @ApiProperty({ description: 'User ID assigned to the task', type: String, required: false })
+  @ApiProperty({
+    description: 'User ID assigned to the task',
+    type: String,
+    required: false,
+  })
   @Prop({ type: Types.ObjectId, ref: 'User' })
   assignedTo: Types.ObjectId;
 
-  @ApiProperty({ description: 'Tags associated with the task', type: [String], required: false })
+  @ApiProperty({
+    description: 'Tags associated with the task',
+    type: [String],
+    required: false,
+  })
   @Prop([String])
   tags: string[];
 
-  @ApiProperty({ description: 'Priority of the task', enum: ['Low', 'Medium', 'High'] })
+  @ApiProperty({
+    description: 'Priority of the task',
+    enum: ['Low', 'Medium', 'High'],
+  })
   @Prop({ enum: ['Low', 'Medium', 'High'] })
   priority: string;
 
-  @ApiProperty({ description: 'Status of the task', enum: ['Open', 'In Progress', 'Completed'] })
+  @ApiProperty({
+    description: 'Status of the task',
+    enum: ['Open', 'In Progress', 'Completed'],
+  })
   @Prop({ enum: ['Open', 'In Progress', 'Completed'] })
   status: string;
 
-  @ApiProperty({ description: 'Due date of the task', type: String, format: 'date-time' })
+  @ApiProperty({
+    description: 'Due date of the task',
+    type: String,
+    format: 'date-time',
+  })
   @Prop()
   dueDate: Date;
 
@@ -42,7 +63,11 @@ export class Task {
   @Prop({ type: Types.ObjectId, ref: 'Task' })
   parent: Types.ObjectId;
 
-  @ApiProperty({ description: 'Subtasks associated with the task', type: [String], required: false })
+  @ApiProperty({
+    description: 'Subtasks associated with the task',
+    type: [String],
+    required: false,
+  })
   @Prop({ type: [Types.ObjectId], ref: 'Task' })
   children?: Task[];
 
@@ -53,7 +78,7 @@ export class Task {
   @ApiProperty({ description: 'Last update date of the task', readOnly: true })
   @Prop({ default: Date.now })
   updatedAt: Date;
- _id: any;
+  _id: any;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

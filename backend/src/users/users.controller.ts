@@ -1,10 +1,14 @@
-import { Controller, Post, Get, Put, Delete, Param, Body } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { ApiTags, ApiOperation, ApiResponse, ApiParam, ApiBody } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
-import { FindUserDto } from './dto/find-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
+import { UsersService } from './users.service';
 
 @ApiTags('users')
 @Controller('users')
@@ -13,7 +17,11 @@ export class UsersController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({ status: 201, description: 'The user has been successfully created.', type: User })
+  @ApiResponse({
+    status: 201,
+    description: 'The user has been successfully created.',
+    type: User,
+  })
   @ApiBody({ type: CreateUserDto })
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
@@ -37,7 +45,10 @@ export class UsersController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a user by ID' })
-  @ApiResponse({ status: 200, description: 'The user has been successfully deleted.' })
+  @ApiResponse({
+    status: 200,
+    description: 'The user has been successfully deleted.',
+  })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @ApiParam({ name: 'id', description: 'User ID' })
   async remove(@Param('id') id: string) {

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -11,7 +19,11 @@ export class ProjectsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new project' })
-  @ApiResponse({ status: 201, description: 'Project created successfully.', type: Project })
+  @ApiResponse({
+    status: 201,
+    description: 'Project created successfully.',
+    type: Project,
+  })
   @ApiResponse({ status: 400, description: 'Invalid input.' })
   create(@Body() createProjectDto: CreateProjectDto): Promise<Project> {
     return this.projectsService.create(createProjectDto);
@@ -19,7 +31,11 @@ export class ProjectsController {
 
   @Get()
   @ApiOperation({ summary: 'Get all projects' })
-  @ApiResponse({ status: 200, description: 'Projects retrieved successfully.', type: [Project] })
+  @ApiResponse({
+    status: 200,
+    description: 'Projects retrieved successfully.',
+    type: [Project],
+  })
   findAll(): Promise<Project[]> {
     return this.projectsService.findAll();
   }
@@ -35,7 +51,11 @@ export class ProjectsController {
 
   @Get('user/:userId')
   @ApiOperation({ summary: 'Get projects by user ID' })
-  @ApiResponse({ status: 200, description: 'Projects retrieved successfully.', type: [Project] })
+  @ApiResponse({
+    status: 200,
+    description: 'Projects retrieved successfully.',
+    type: [Project],
+  })
   @ApiResponse({ status: 404, description: 'Projects not found.' })
   @ApiParam({ name: 'userId', description: 'User ID' })
   findByUserId(@Param('userId') userId: string): Promise<Project[]> {
@@ -44,16 +64,27 @@ export class ProjectsController {
 
   @Put(':id')
   @ApiOperation({ summary: 'Update a project by ID' })
-  @ApiResponse({ status: 200, description: 'Project updated successfully.', type: Project })
+  @ApiResponse({
+    status: 200,
+    description: 'Project updated successfully.',
+    type: Project,
+  })
   @ApiResponse({ status: 404, description: 'Project not found.' })
   @ApiParam({ name: 'id', description: 'Project ID' })
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto): Promise<Project> {
+  update(
+    @Param('id') id: string,
+    @Body() updateProjectDto: UpdateProjectDto,
+  ): Promise<Project> {
     return this.projectsService.update(id, updateProjectDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a project by ID' })
-  @ApiResponse({ status: 200, description: 'Project deleted successfully.', type: Project })
+  @ApiResponse({
+    status: 200,
+    description: 'Project deleted successfully.',
+    type: Project,
+  })
   @ApiResponse({ status: 404, description: 'Project not found.' })
   @ApiParam({ name: 'id', description: 'Project ID' })
   remove(@Param('id') id: string): Promise<Project> {

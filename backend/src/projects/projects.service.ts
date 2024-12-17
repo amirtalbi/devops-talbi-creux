@@ -32,8 +32,13 @@ export class ProjectsService {
     return this.projectModel.find({ userId }).exec();
   }
 
-  async update(id: string, updateProjectDto: UpdateProjectDto): Promise<Project> {
-    const updatedProject = await this.projectModel.findByIdAndUpdate(id, updateProjectDto, { new: true }).exec();
+  async update(
+    id: string,
+    updateProjectDto: UpdateProjectDto,
+  ): Promise<Project> {
+    const updatedProject = await this.projectModel
+      .findByIdAndUpdate(id, updateProjectDto, { new: true })
+      .exec();
     if (!updatedProject) {
       throw new NotFoundException(`Project with ID ${id} not found`);
     }

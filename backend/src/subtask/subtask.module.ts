@@ -9,6 +9,6 @@ import { Subtask, SubtaskSchema } from './schemas/subtask.schema';
     MongooseModule.forFeature([{ name: Subtask.name, schema: SubtaskSchema }]),
   ],
   controllers: [SubtaskController],
-  providers: [SubtaskService]
+  providers: [SubtaskService],
 })
 export class SubtaskModule {}

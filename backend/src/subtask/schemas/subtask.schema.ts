@@ -10,15 +10,25 @@ export class Subtask {
   @Prop({ required: true })
   title: string;
 
-  @ApiProperty({ description: 'Task ID associated with the subtask', type: String })
+  @ApiProperty({
+    description: 'Task ID associated with the subtask',
+    type: String,
+  })
   @Prop({ type: Types.ObjectId, ref: 'Task', required: true })
   taskId: Types.ObjectId;
 
-  @ApiProperty({ description: 'Status of the subtask', enum: ['Open', 'In Progress', 'Completed'] })
+  @ApiProperty({
+    description: 'Status of the subtask',
+    enum: ['Open', 'In Progress', 'Completed'],
+  })
   @Prop({ enum: ['Open', 'In Progress', 'Completed'] })
   status: string;
 
-  @ApiProperty({ description: 'Due date of the subtask', type: String, format: 'date-time' })
+  @ApiProperty({
+    description: 'Due date of the subtask',
+    type: String,
+    format: 'date-time',
+  })
   @Prop()
   dueDate: Date;
 
@@ -26,7 +36,10 @@ export class Subtask {
   @Prop({ default: Date.now })
   createdAt: Date;
 
-  @ApiProperty({ description: 'Last update date of the subtask', readOnly: true })
+  @ApiProperty({
+    description: 'Last update date of the subtask',
+    readOnly: true,
+  })
   @Prop({ default: Date.now })
   updatedAt: Date;
 }

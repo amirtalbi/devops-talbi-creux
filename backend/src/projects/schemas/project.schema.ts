@@ -14,7 +14,11 @@ export class Project {
   @Prop()
   description: string;
 
-  @ApiProperty({ description: 'Task list associated with the project', type: [String], required: false })
+  @ApiProperty({
+    description: 'Task list associated with the project',
+    type: [String],
+    required: false,
+  })
   @Prop({ type: [Types.ObjectId], ref: 'Task' })
   tasks: Types.ObjectId[];
 
@@ -22,7 +26,11 @@ export class Project {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   ownerId: Types.ObjectId;
 
-  @ApiProperty({ description: 'Members of the project', type: [String], required: false })
+  @ApiProperty({
+    description: 'Members of the project',
+    type: [String],
+    required: false,
+  })
   @Prop([{ type: Types.ObjectId, ref: 'User' }])
   members: Types.ObjectId[];
 
@@ -30,7 +38,10 @@ export class Project {
   @Prop({ default: Date.now })
   createdAt: Date;
 
-  @ApiProperty({ description: 'Last update date of the project', readOnly: true })
+  @ApiProperty({
+    description: 'Last update date of the project',
+    readOnly: true,
+  })
   @Prop({ default: Date.now })
   updatedAt: Date;
 }
