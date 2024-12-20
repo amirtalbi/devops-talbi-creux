@@ -29,14 +29,14 @@ import { UsersModule } from './users/users.module';
   providers: [AppService],
 })
 export class AppModule {
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer
-  //     .apply(AuthMiddleware)
-  //     .exclude(
-  //       { path: 'auth/login', method: RequestMethod.ALL },
-  //       { path: 'auth/register', method: RequestMethod.ALL },
-  //       { path: 'auth/health', method: RequestMethod.ALL },
-  //     )
-  //     .forRoutes('*');
-  // }
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: 'auth/login', method: RequestMethod.ALL },
+        { path: 'auth/register', method: RequestMethod.ALL },
+        { path: 'auth/health', method: RequestMethod.ALL },
+      )
+      .forRoutes('*');
+  }
 }
