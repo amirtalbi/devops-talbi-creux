@@ -28,3 +28,14 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+// Exclure le champ `password` lors de la conversion en JSON
+UserSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.password;
+    return ret;
+  },
+});
+
+// Assurez-vous que les index uniques sont correctement configurés
+UserSchema.index({ email: 1, username: 1 }, { unique: true });

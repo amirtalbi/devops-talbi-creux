@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from './schemas/user.schema';
+import * as bcrypt from 'bcryptjs';
 import { Model } from 'mongoose';
+import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserDto } from './dto/find-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User, UserDocument } from './schemas/user.schema';
 
 @Injectable()
 export class UsersService {
@@ -13,10 +14,22 @@ export class UsersService {
     private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<UserDocument> {
+  async create(createUserDto: CreateUserDto): Promise<Omit<UserDocument, 'password'>> {
     const { username, email, password } = createUserDto;
-    const user = new this.userModel({ username, email, password });
-    return user.save();
+
+    const existingUser = await this.userModel.findOne({
+      $or: [{ email }, { username }],
+    }).exec();
+    if (existingUser) {
+      throw new ConflictException('Email ou username déjà utilisé');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = new this.userModel({ username, email, password: hashedPassword });
+    await user.save();
+    user.password = undefined;
+    return user;
   }
 
   async findOne(findUserDto: FindUserDto): Promise<UserDocument | null> {
@@ -34,12 +47,20 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
-    return this.userModel
+    const updatedUser = await this.userModel
       .findByIdAndUpdate(id, updateUserDto, { new: true })
       .exec();
+    if (!updatedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return updatedUser;
   }
 
-  async remove(id: string): Promise<User | null> {
-    return this.userModel.findByIdAndDelete(id).exec();
+  async remove(id: string): Promise<User> {
+    const deletedUser = await this.userModel.findByIdAndDelete(id).exec();
+    if (!deletedUser) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+    return deletedUser;
   }
 }

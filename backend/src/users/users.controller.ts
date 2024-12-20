@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Put
+} from '@nestjs/common';
 import {
   ApiBody,
   ApiOperation,
@@ -6,7 +15,9 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { ObjectIdValidationPipe } from '../common/pipes/object-id-validation.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/user.schema';
 import { UsersService } from './users.service';
 
@@ -24,16 +35,21 @@ export class UsersController {
   })
   @ApiBody({ type: CreateUserDto })
   async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    const user = this.usersService.create(createUserDto);
+    return user
   }
 
   @Get(':email')
-  @ApiOperation({ summary: 'Get a user by ID' })
+  @ApiOperation({ summary: 'Get a user by email' })
   @ApiResponse({ status: 200, description: 'User found.', type: User })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @ApiParam({ name: 'email', description: 'User email' })
   async findOne(@Param('email') email: string) {
-    return this.usersService.findOne({ email });
+    const user = await this.usersService.findOne({ email });
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+    return user;
   }
 
   @Get()
@@ -51,7 +67,23 @@ export class UsersController {
   })
   @ApiResponse({ status: 404, description: 'User not found.' })
   @ApiParam({ name: 'id', description: 'User ID' })
-  async remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  async remove(@Param('id', ObjectIdValidationPipe) id: string): Promise<void> {
+    await this.usersService.remove(id);
+  }
+
+  @Put(':id')
+  @ApiOperation({ summary: 'Update a user by ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'The user has been successfully updated.',
+    type: User,
+  })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  @ApiParam({ name: 'id', description: 'User ID' })
+  async update(
+    @Param('id', ObjectIdValidationPipe) id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    return this.usersService.update(id, updateUserDto);
   }
 }

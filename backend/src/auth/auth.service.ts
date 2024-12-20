@@ -3,8 +3,8 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from 'src/jwt-service/jwt-service.service';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginDto } from 'src/users/dto/login.dto';
+import { UserDocument } from 'src/users/schemas/user.schema';
 import { UsersService } from 'src/users/users.service';
-import { UserDocument } from 'src/users/schemas/user.schema'; // Assurez-vous d'importer UserDocument
 
 @Injectable()
 export class AuthService {
@@ -42,7 +42,7 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const payload = { sub: user._id.toString(), email: user.email }; // Utilisez toString() si nécessaire
+    const payload = { sub: user._id.toString(), email: user.email };
     const accessToken = this.jwtService.sign(payload);
     return { accessToken, userId: user._id.toString() };
   }
