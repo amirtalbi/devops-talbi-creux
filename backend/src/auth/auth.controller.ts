@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { LoginDto } from 'src/users/dto/login.dto';
@@ -23,5 +23,10 @@ export class AuthController {
   @ApiResponse({ status: 400, description: 'Bad request.' })
   async register(@Body() createUserDto: CreateUserDto) {
     return await this.authService.register(createUserDto);
+  }
+
+  @Get('health')
+  async health() {
+    return 'OK';
   }
 }
