@@ -1,11 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import {
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsArray,
-} from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsArray } from 'class-validator';
 
 export class CreateProjectDto {
   @ApiProperty({ description: 'Name of the project' })

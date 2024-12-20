@@ -1,16 +1,15 @@
-import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
-import { ProjectsModule } from './projects/projects.module';
-import { TaskModule } from './task/task.module';
-import { SubtaskModule } from './subtask/subtask.module';
 import { JwtServiceModule } from './jwt-service/jwt-service.module';
-import { AuthMiddleware } from './auth/auth.middleware';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ProjectsModule } from './projects/projects.module';
+import { SubtaskModule } from './subtask/subtask.module';
+import { TaskModule } from './task/task.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [

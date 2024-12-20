@@ -6,7 +6,7 @@ import {
   NotFoundException,
   Param,
   Post,
-  Put
+  Put,
 } from '@nestjs/common';
 import {
   ApiBody,
@@ -36,7 +36,7 @@ export class UsersController {
   @ApiBody({ type: CreateUserDto })
   async create(@Body() createUserDto: CreateUserDto) {
     const user = this.usersService.create(createUserDto);
-    return user
+    return user;
   }
 
   @Get(':email')
